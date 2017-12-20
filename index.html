@@ -5,8 +5,33 @@
 	<title>Hello World</title>
 	<link rel="icon" href="/favicon.ico" type="image/x-icon">
 	<script data-main="main" src="node_modules/requirejs/require.js"></script>
-	<style>* { padding: 0px; margin: 0px; }</style>
+	<style>
+		* { padding: 0px; margin: 0px; }
+		#game {
+			margin-left: auto;
+			margin-right: auto;
+			width: 920px;
+		}
+		menuitem {
+			display: block;
+			margin: 4px;
+			margin-left: auto;
+			margin-right: auto;
+			vertical-align: middle;
+			text-align: center;
+			font-size: 3em;
+			width: 200px;
+			height: 100px;
+			background: white;
+			color: black;
+			border: 1px solid gray;
+		}
+	</style>
 </head>
 <body>
+	<!-- <menu> -->
+		<!-- <menuitem id="shuffle">Shuffle</menuitem> -->
+	<!-- </menu> -->
+	<div id="game"></div>
 </body>
 </html>
