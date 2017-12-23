@@ -7,4 +7,4 @@ requirejs.config({
 	}
 })
 
-require(['app'], (app, PIXI) => { app() })
+require(['app'], (app) => { app() })
