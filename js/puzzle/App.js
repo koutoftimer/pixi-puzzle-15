@@ -1,4 +1,4 @@
-define('puzzle/App', ['pixi', 'puzzle/WellcomeScene', 'puzzle/GameScene'], (PIXI, WellcomeScene, GameScene) => {
+define('puzzle/App', ['pixi', 'puzzle/WellcomeScene', 'puzzle/GameScene', 'puzzle/WinScene'], (PIXI, WellcomeScene, GameScene, WinScene) => {
 	const Application = PIXI.Application,
 		Point = PIXI.Point,
 		Sprite = PIXI.Sprite
@@ -31,10 +31,19 @@ define('puzzle/App', ['pixi', 'puzzle/WellcomeScene', 'puzzle/GameScene'], (PIXI
 				.then(() => this.resourcesLoaded(nextScene))
 		}
 		
+		changeScene(nextScene) {
+			nextScene.loadResources()
+				.then(() => this.resourcesLoaded(nextScene))
+		}
+		
 		resourcesLoaded(scene) {
 			this.currentScene.hide()
 			scene.show()
 			this.currentScene = scene
+		}
+		
+		showWinScene() {
+			this.changeScene(new WinScene({ application: this }))
 		}
 	}
 	

@@ -1,9 +1,11 @@
-define('puzzle/PuzzleBoard', ['pixi', 'hammer', 'puzzle/PuzzleTile'], (PIXI, Hammer, PuzzleTile) => {
+define('puzzle/PuzzleBoard', ['pixi', 'pixi-sound', 'hammer', 'puzzle/PuzzleTile'], (PIXI, pixiSound, Hammer, PuzzleTile) => {
 	const Container = PIXI.Container,
 		Graphics = PIXI.Graphics,
+		loader = PIXI.loader,
 		Point = PIXI.Point,
 		Rectangle = PIXI.Rectangle,
 		resources = PIXI.loader.resources,
+		sound = PIXI.sound,
 		Sprite = PIXI.Sprite,
 		Text = PIXI.Text,
 		Texture = PIXI.Texture
@@ -26,10 +28,19 @@ define('puzzle/PuzzleBoard', ['pixi', 'hammer', 'puzzle/PuzzleTile'], (PIXI, Ham
 		get tileWidth() { return this.boardWidth / this.boardSize }
 		get tileHeight() { return this.boardHeight / this.boardSize }
 		
+		get showWinScreen() {
+			for (let row = 0; row < this.boardSize; ++row)
+				for (let col = 0; col < this.boardSize; ++col)
+					if (this.board[row][col].row != row || this.board[row][col].col != col)
+						return false
+			return true
+		}
+		
 		constructor(conf) { 
 			super()
 			
 			this.scene = conf['scene']
+			this.winCallback = conf['winCallback']
 			this.swipeManager = null
 		
 			// number of rows and columns in the puzzle
@@ -47,6 +58,16 @@ define('puzzle/PuzzleBoard', ['pixi', 'hammer', 'puzzle/PuzzleTile'], (PIXI, Ham
 			this.emptyTile = new Point(this.boardSize-1, this.boardSize-1)
 			
 			this.position.set(0, 100)
+			
+			this.moveSound = null
+			if (resources['moveSound']) this.moveSound = resources['moveSound'].sound
+			else {
+				let self = this
+				loader.add('moveSound', 'ogg/move.ogg')
+					.load((loader, resources) => {
+						self.moveSound = resources['moveSound'].sound
+					})
+			}
 		}
 		
 		swapTiles(x1, y1, x2, y2) {
@@ -56,9 +77,13 @@ define('puzzle/PuzzleBoard', ['pixi', 'hammer', 'puzzle/PuzzleTile'], (PIXI, Ham
 			this.board[y1][x1] = s2, this.board[y2][x2] = s1
 			// swap sprite position
 			s1.swap(s2)
+			
+			if (this.showWinScreen) this.winCallback()
 		}
 		
 		moveEmptyTile(direction) {
+			this.moveSound.play()
+			
 			let emptyTile = this.emptyTile
 			if (direction == DIRECTIONS.left) {
 				if (emptyTile.x == 0) return;

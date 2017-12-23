@@ -6,7 +6,11 @@ define('puzzle/GameScene', ['pixi', 'puzzle/BaseScene', 'puzzle/PuzzleBoard', 'p
 		constructor(conf) {
 			super(conf)
 			
-			this.board = new PuzzleBoard({ scene: this, boardSize: 4 })
+			this.board = new PuzzleBoard({ 
+				scene: this, 
+				boardSize: 4,
+				winCallback: this.showWinScene.bind(this)
+			})
 			this.addChild(this.board)
 			
 			this.menu = new PuzzleMenu({ mixCallback: this.board.mixTiles.bind(this.board) })
@@ -38,11 +42,16 @@ define('puzzle/GameScene', ['pixi', 'puzzle/BaseScene', 'puzzle/PuzzleBoard', 'p
 
 		setup() {
 			this.board.setup()
+			this.board.mixTiles()
 		}
 		
 		show() {
 			super.show()
 			this.board.addEventHandlers()
+		}
+		
+		showWinScene() {
+			this.application.showWinScene()
 		}
 	}
 	
