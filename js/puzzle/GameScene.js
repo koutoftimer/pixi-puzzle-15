@@ -1,53 +1,52 @@
-define('puzzle/GameScene', ['pixi', 'puzzle/BaseScene', 'puzzle/PuzzleBoard', 'puzzle/PuzzleMenu'], (PIXI, BaseScene, PuzzleBoard, PuzzleMenu) => {
+define('puzzle/GameScene', [
+	'pixi', 
+	'puzzle/BaseScene', 
+	'puzzle/PuzzleBoard', 
+	'puzzle/PuzzleMenu',
+	'puzzle/data/Board', 
+	'puzzle/controller/PuzzleBoardController'
+], (PIXI, BaseScene, PuzzleBoard, PuzzleMenu, board, PuzzleBoardController) => {
 	const loader = PIXI.loader,
+		resources = PIXI.loader.resources,
 		Text = PIXI.Text
 	
 	class GameScene extends BaseScene {
+		
 		constructor(conf) {
 			super(conf)
 			
-			this.board = new PuzzleBoard({ 
+			this.board = new PuzzleBoard({
 				scene: this, 
-				boardSize: 4,
-				winCallback: this.showWinScene.bind(this)
+				boardSize: board.size
 			})
 			this.addChild(this.board)
 			
-			this.menu = new PuzzleMenu({ mixCallback: this.board.mixTiles.bind(this.board) })
-			this.addChild(this.menu)
+			this.boardController = new PuzzleBoardController({ 
+				view: this.board,
+				winCallback: this.showWinScene.bind(this)
+			})
+			
+			this.addChild(new PuzzleMenu())
 		}
 		
 		hide() {
-			this.board.removeEventHandlers()
+			this.boardController.removeEventHandlers()
 			super.hide()
 		}
 		
 		loadResources() {
-			return new Promise((resolve, reject) => {
-				let resourcesList = this.children
-					.map((child) => child.resources || [])
-					.reduce((a, c) => a.concat(c))
-				
-				if (resourcesList.length) {
-					loader.add(resourcesList).load(() => {
-						this.setup()
-						resolve()
-					})
-				} else {
-					this.setup()
-					resolve()
-				}
-			})
+			return super.loadResources()
+				.then(this.setup.bind(this))
 		}
 
 		setup() {
 			this.board.setup()
-			this.board.mixTiles()
+			board.mix()
 		}
 		
 		show() {
 			super.show()
-			this.board.addEventHandlers()
+			this.boardController.addEventHandlers()
 		}
 		
 		showWinScene() {

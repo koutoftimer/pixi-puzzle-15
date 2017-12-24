@@ -15,10 +15,6 @@ define('puzzle/PuzzleTile', ['pixi'], (PIXI) => {
 				
 			this.width = width
 			this.height = height
-				
-			// initial positions
-			this.row = conf['row']
-			this.col = conf['col']
 			
 			let sprite = new Sprite(texture)
 			sprite.position.set(0, 0)
@@ -30,22 +26,10 @@ define('puzzle/PuzzleTile', ['pixi'], (PIXI) => {
 			number.x = (width - number.width) / 2
 			number.y = (height - number.height) / 2
 			this.addChild(number)
-			
-			this.initPosition()
-		}
-		
-		initPosition() {
-			this.setPosition(this.row, this.col)
 		}
 		
 		setPosition(row, col) {
 			this.position.set(this.width * col, this.height * row)
-		}
-		
-		swap(other) {
-			let tempPoint = new Point(this.position.x, this.position.y)
-			this.position.copy(other.position)
-			other.position.copy(tempPoint)
 		}
 	}
 	

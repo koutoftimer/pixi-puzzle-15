@@ -5,6 +5,13 @@ define('puzzle/WinScene', ['pixi', 'pixi-sound', 'puzzle/BaseScene', 'puzzle/Gam
 		Text = PIXI.Text
 	
 	class WinScene extends BaseScene {
+		
+		get _resources() {
+			return [
+				{ name: 'winSound', url: 'ogg/win.ogg' }
+			]
+		}
+		
 		constructor(conf) {
 			super(conf)
 			
@@ -40,7 +47,6 @@ define('puzzle/WinScene', ['pixi', 'pixi-sound', 'puzzle/BaseScene', 'puzzle/Gam
 			this.addChild(this.backButton)
 			
 			this.sound = null
-			this.playWonSound()
 		}
 		
 		backToGame() {
@@ -48,18 +54,14 @@ define('puzzle/WinScene', ['pixi', 'pixi-sound', 'puzzle/BaseScene', 'puzzle/Gam
 			this.application.changeScene(new GameScene({ application: this.application }))
 		}
 		
-		playWonSound() {
-			let self = this
-			if (resources['winSound']) {
-				self.sound = resources['winSound']
-				self.sound.play()
-			} else {
-				loader.add('winSound', 'ogg/win.ogg')
-					.load((loader, resources) => {
-						self.sound = resources['winSound'].sound
-						self.sound.play()
-					})
-			}
+		loadResources() {
+			return super.loadResources()
+				.then(this.setup.bind(this))
+		}
+
+		setup() {
+			this.sound = resources['winSound'].sound
+			this.sound.play()
 		}
 	}
 	

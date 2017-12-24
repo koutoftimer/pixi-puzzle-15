@@ -5,6 +5,7 @@
   "main": "index.html",
   "dependencies": {
     "hammerjs": "^2.0.8",
+    "mini-signals": "^1.2.0",
     "pixi-sound": "^2.0.1",
     "pixi.js": "^4.6.2",
     "requirejs": "^2.3.5"

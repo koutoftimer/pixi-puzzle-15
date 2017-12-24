@@ -26,9 +26,7 @@ define('puzzle/App', ['pixi', 'puzzle/WellcomeScene', 'puzzle/GameScene', 'puzzl
 			})
 			this.currentScene.show()
 			
-			let nextScene = new GameScene({ application: this })
-			nextScene.loadResources()
-				.then(() => this.resourcesLoaded(nextScene))
+			this.changeScene(new GameScene({ application: this }))
 		}
 		
 		changeScene(nextScene) {
