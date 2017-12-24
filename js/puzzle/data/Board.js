@@ -1,20 +1,19 @@
 define('puzzle/data/Board', ['mini-signals'], (MiniSignal) => {
+	const defaults = {
+		size: 3
+	}
 	
 	class Board {
 		
 		constructor() {
 			let size = parseInt(localStorage.getItem('boardSize'))
-			this._size = !isNaN(size) ? size : this.defaults.size
+			this._size = !isNaN(size) ? size : defaults.size
 			
 			this._board = null
 			this.initBoard()
 			
 			this.boardSizeChanged = new MiniSignal()
 			this.boardChanged = new MiniSignal()
-		}
-		
-		get defaults() {
-			size: 3
 		}
 		
 		// retrieve index of the empty puzzle
