@@ -1,7 +1,7 @@
 {
   "name": "pixijs-test",
   "version": "1.0.0",
-  "description": "",
+  "description": "Puzzle 15 implementation with usage of pixi.js",
   "main": "index.html",
   "dependencies": {
     "hammerjs": "^2.0.8",
@@ -11,7 +11,7 @@
     "requirejs": "^2.3.5"
   },
   "devDependencies": {
-    "spritesheet-js": "^1.2.6"
+    "gulp": "^3.9.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
