@@ -8,3 +8,5 @@ img/
 node_modules/
 *.ico
 package-lock.json
+src/js/lib/
+build/

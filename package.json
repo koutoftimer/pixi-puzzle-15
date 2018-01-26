@@ -11,15 +11,13 @@
     "requirejs": "^2.3.5"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "gulp": "^3.9.1",
     "gulp-requirejs": "^1.1.1"
-=======
-    "gulp": "^3.9.1"
->>>>>>> 72be9865067c2849784116730a8ef582af884d93
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -r build/* && ./node_modules/.bin/gulp build",
+    "copy": "rm -r src/js/lib/* && ./node_modules/.bin/gulp copy",
+    "start": "npm run build"
   },
   "author": "Ruslan Kovtun <koutoftimer@gmail.com>",
   "license": "BSD-2-Clause"
