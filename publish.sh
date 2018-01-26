@@ -1,6 +1,9 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-DIR=$(dirname $0)
+set -e
+
+BUILD_DIR="build"
+GIT_BRANCH="gh-pages"
 
 if [[ $(git status -s) ]]
 then
@@ -9,22 +12,22 @@ then
 fi
 
 echo "Deleting old publications"
-rm -rf public
-mkdir public
+rm -rf $BUILD_DIR
+mkdir $BUILD_DIR
 git worktree prune
-rm -rf .git/worktrees/public
+rm -rf .git/worktrees/$BUILD_DIR
 
-echo "Checking out gh-pages branch into public"
-git worktree add -B gh-pages public origin/gh-pages
+echo "Checking out $GIT_BRANCH branch into ./$BUILD_DIR/"
+git worktree add -B $GIT_BRANCH $BUILD_DIR origin/$GIT_BRANCH
 
 echo "Removing existing files"
-rm -rf public/*
+rm -rf $BUILD_DIR/*
 
 echo "Building.."
 npm run build
 
-echo "Updating gh-pages branch"
-cd public
+echo "Updating $GIT_BRANCH branch"
+cd $BUILD_DIR
 git add --all
-git commit -m "Publishing to gh-pages (publish.sh)"
-git push origin gh-pages
+git commit -m "Publishing to $GIT_BRANCH (publish.sh)"
+git push origin $GIT_BRANCH

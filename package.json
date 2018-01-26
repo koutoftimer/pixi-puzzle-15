@@ -15,8 +15,8 @@
     "gulp-requirejs": "^1.1.1"
   },
   "scripts": {
-    "build": "rm -r build/* && ./node_modules/.bin/gulp build",
-    "copy": "rm -r src/js/lib/* && ./node_modules/.bin/gulp copy",
+    "build": "rm -rf ./build/* && ./node_modules/.bin/gulp build",
+    "copy": "rm -rf ./src/js/lib/* && ./node_modules/.bin/gulp copy",
     "start": "npm run build"
   },
   "author": "Ruslan Kovtun <koutoftimer@gmail.com>",
