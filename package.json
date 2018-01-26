@@ -11,8 +11,12 @@
     "requirejs": "^2.3.5"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "gulp": "^3.9.1",
     "gulp-requirejs": "^1.1.1"
+=======
+    "gulp": "^3.9.1"
+>>>>>>> 72be9865067c2849784116730a8ef582af884d93
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
