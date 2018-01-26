@@ -12,12 +12,13 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
-    "gulp-requirejs": "^1.1.1"
+    "gulp-requirejs": "^1.1.1",
+    "http-server": "^0.11.1"
   },
   "scripts": {
     "build": "rm -rf ./build/* && ./node_modules/.bin/gulp build",
     "copy": "rm -rf ./src/js/lib/* && ./node_modules/.bin/gulp copy",
-    "start": "npm run build"
+    "server": "./node_modules/.bin/http-server ./build/"
   },
   "author": "Ruslan Kovtun <koutoftimer@gmail.com>",
   "license": "BSD-2-Clause"
